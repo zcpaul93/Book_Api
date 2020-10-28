@@ -1,0 +1,12 @@
+Use BookApi
+declare @publisher int =null, @author int = 2, @type int = 5,
+@minPrice decimal = null, @maxPrice decimal = 20.20; 
+
+Select B.BookId, B.Name, B.Price from Books B 
+	inner join BookTypes BT on B.BookId=BT.BookId
+	inner join Types T on T.TypesId=BT.TypesId
+	inner join Authors A on A.Id=B.AuthorId
+	inner join Publishers P on P.Id=B.PublisherId
+	where
+	 T.TypesId = isnull(@type, t.TypesId) and A.Id = isnull(@author, a.Id) and P.Id = isnull(@publisher, p.Id)
+	 and B.Price >= isnull(@minPrice, b.Price) and B.Price <= isnull(@maxPrice, b.Price)
